@@ -58,7 +58,7 @@ const TextField = ({
 }: Props): JSX.Element => {
 
 	const [isFocus, setIsFocus] = useState<boolean>(false);
-	
+
 	return (
 		<ContainerTextField
 			className={classes}
@@ -98,6 +98,7 @@ const TextField = ({
 						className={`${id} ${classesInput}`}
 						autoComplete={"off"}
 						ref={refInput}
+						id={id}
 					/>
 				}
 

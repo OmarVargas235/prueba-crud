@@ -126,12 +126,11 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
             <div className='d-flex'>
                 {
                     isNewUser
-                    ? <Button classes='mr-2' color='#1987FB' handleClick={() => addUser()}>Nuevo usuario</Button>
+                    ? <Button classes='mr-2' handleClick={() => addUser()}>Nuevo usuario</Button>
                     : null
                 }
 
                 <Button
-                    color='#1987FB'
                     handleClick={() => refresh()}
                     edge='end'
                     icon={<BiRefresh size={18} />}
@@ -192,11 +191,11 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
 
             <Text
                 size='14px'
+                color='white'
             >Mostrando registros del {init} al {currentPage === totalPage ? dataBody.length : end} de un total de {dataBody.length} registros</Text>
 
             <div className='d-flex align-items-center'>
                 <Button
-                    color='#1987FB'
                     classes='btn-table'
                     handleClick={prev}
                     disabled={currentPage === ValuesDefault.init}
@@ -215,10 +214,9 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
                 </div>
 
                 <Button
-                    color='#1987FB'
                     classes='btn-table'
                     handleClick={next}
-                    disabled={currentPage === totalPage}
+                    disabled={currentPage === totalPage || totalPage === 0}
                 >Siguiente</Button>
             </div>
         </div>

@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 // 2.- components
 import RouterPublic from './RouterPublic';
-// import RouterPrivate from './RouterPrivate';
+import RouterPrivate from './RouterPrivate';
 import Alert from '../layauts/alert/Alert';
 import Spinner from '../layauts/spinner/Spinner';
 
@@ -22,14 +22,9 @@ const AppRouter = (): JSX.Element => {
 
         {
             isAuth
-                ? <div>RouterPrivate</div>
+                ? <RouterPrivate />
                 : <RouterPublic />
         }
-        {/* {
-            isAuth
-                ? <RouterPrivate />
-                : 
-        } */}
     </Router>;
 }
 

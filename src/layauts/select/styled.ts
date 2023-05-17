@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div<{ isError: boolean; }>`
-    border: ${props => props.isError ? `2px solid #BA1A1A` : `1px solid  #DDDDDD`};
+    border: ${props => props.isError ? `2px solid #BA1A1A` : `1px solid  #EE3A57`};
     border-radius: 4px;
     height: 47px;
 `;
@@ -13,6 +13,7 @@ export const ContainerAutoComplete = styled.div`
 `;
 
 export const Current = styled.div`
+    color: white;
 `;
 
 export const ContainerOptions = styled.div`

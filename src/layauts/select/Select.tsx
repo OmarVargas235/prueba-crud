@@ -1,5 +1,5 @@
 // 1.- librerias
-import { useState, useEffect, ChangeEvent, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect, ChangeEvent, useRef } from 'react';
 
 // 2.- estilos
 import { Container, Current, ContainerOptions, Option, Label, ContainerAutoComplete } from './styled';
@@ -40,10 +40,10 @@ const Arrows = ({ currentValue, isSearch=false }: { currentValue: string; isSear
         }
 
         <div className='d-flex flex-column ml-2' id='closeSelect'>
-            <RiArrowUpSFill size={12} style={{ color: '#242424' }} id='closeSelect' />
+            <RiArrowUpSFill size={12} style={{ color: 'white' }} id='closeSelect' />
             <RiArrowUpSFill
                 size={12}
-                style={{ transform: 'rotateZ(180deg)', color: '#242424' }}
+                style={{ transform: 'rotateZ(180deg)', color: 'white' }}
                 id='closeSelect'
             />
         </div>
@@ -58,17 +58,18 @@ const Select = ({ options, handleChange, className='', classNameSelect='', label
     const [currentValue, setCurrentValue] = useState<string>('');
     const [optionsLocal, setOptionsLocal] = useState<IOption[]>([]);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         window.addEventListener('click', (e: any) => {
+            const path = e.composedPath();
 
-            if (e.path === undefined) return;
+            if (path === undefined) return;
 
             // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-            const isClassId = !(e.path[0].getAttribute('class')?.includes('closeSelect'));
+            const isClassId = !(path[0].getAttribute('class')?.includes('closeSelect'));
 
-			if (e.path[0].getAttribute('id') !== 'closeSelect' && isClassId)
+			if (path[0].getAttribute('id') !== 'closeSelect' && isClassId)
                 setOpen(false);
 		});
 
@@ -76,13 +77,14 @@ const Select = ({ options, handleChange, className='', classNameSelect='', label
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
 			window.removeEventListener('click', (e: any) => {
+                const path = e.composedPath();
 
-                if (e.path === undefined) return;
+                if (path === undefined) return;
             
                 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-                const isClassId = !(e.path[0].getAttribute('class')?.includes('closeSelect'));
+                const isClassId = !(path[0].getAttribute('class')?.includes('closeSelect'));
 
-                if (e.path[0].getAttribute('id') !== 'closeSelect' && isClassId)
+                if (path[0].getAttribute('id') !== 'closeSelect' && isClassId)
                     setOpen(false);
             });
         }
@@ -165,7 +167,7 @@ const Select = ({ options, handleChange, className='', classNameSelect='', label
                                     ))
                                 }
                             </> : <Text
-                                color='rgb(122, 134, 154);'
+                                color='white'
                             >Sin opciones</Text>
                         }
                     </ContainerOptions> : null
