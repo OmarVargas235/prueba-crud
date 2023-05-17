@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 
 // 2.- components
-import LoginPage from "../components/LoginPage";
+import RegisterAdminPage from "../components/RegisterAdminPage";
 
 // 3.- hooks
 import { useForm } from "../../../hooks/hookForm/useForm";
@@ -18,14 +18,18 @@ import { alert, validateEmail } from '../../../helpers/utils';
 import { setIsActiveLoading } from '../../../redux/reducers/reducerBlockUI';
 
 export interface Model {
+    name: string;
+    lastName: string;
+    company: string;
     email: string;
     password: string;
+    repeatPassword: string;
 }
 
-const requeridFields = ['email', 'password'] as const;
+const requeridFields = ['name', 'lastName', 'company', 'email', 'password', 'repeatPassword'] as const;
 export type RequeridFields = typeof requeridFields[number];
 
-const Login = (): JSX.Element => {
+const RegisterAdmin = (): JSX.Element => {
 
     const dispatch = useDispatch();
 
@@ -33,16 +37,22 @@ const Login = (): JSX.Element => {
 
     const { handleSubmit, handleChange, validateFields, errors } = useForm<Model, RequeridFields>();
 
-    const [isShowPassword, setIsShowPassword] = useState<boolean>(true);
+    const [isShowPassword, setIsShowPassword] = useState<{isShow1: boolean; isShow2: boolean;}>({
+        isShow1: true,
+        isShow2: true,
+    });
     const [form, setForm] = useState<Model>({
+        name: '',
+        lastName: '',
+        company: '',
         email: '',
-        password: ''
+        password: '',
+        repeatPassword: '',
     });
 
     const onSubmit = async (model: object): Promise<void> => {
     
         const newModel = model as Model;
-        
         const isError: boolean = validateFields(newModel, [...requeridFields]);
         
         if (isError) return;
@@ -59,7 +69,7 @@ const Login = (): JSX.Element => {
         if (result.status !== 200) return alert({ dispatch, isAlertSuccess: false, message: result.message });
     }
 
-    return <LoginPage
+    return <RegisterAdminPage
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         onSubmit={onSubmit}
@@ -71,4 +81,4 @@ const Login = (): JSX.Element => {
     />;
 }
 
-export default Login;
+export default RegisterAdmin;

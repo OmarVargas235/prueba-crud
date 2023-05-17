@@ -23,7 +23,7 @@ const styles = (): string => `
     transition: border .1s ease-in-out;
     font-size: 14px;
     color: gray;
-    background-color: white;
+	background-color: transparent;
 
     &:focus {
         border: 1px solid #5C4D9C;
@@ -63,6 +63,10 @@ export const Input = styled.input`
 	&:focus {
 		border: none;
 	}
+
+	&::placeholder {
+		color:white;
+	}
 `;
 
 export const Textarea = styled.textarea`
@@ -91,10 +95,10 @@ export const ContainerInput = styled.div<IContainerInput>`
 			isFocus
 				? isError
 					? '#D32F2F'
-					: 'gray'
+					: '#EE3A57'
 				: isError
-				? '#D32F2F'
-				: '#C4C4C4'};
+					? '#D32F2F'
+					: '#EE3A57'};
 
 	svg {
 		cursor: pointer;
@@ -103,12 +107,12 @@ export const ContainerInput = styled.div<IContainerInput>`
 	input {
 		width: 100%;
 		color: ${({ isError }: IContainerInput) =>
-			isError ? '#D32F2F' : 'gray'};
+			isError ? '#D32F2F' : 'white'};
 	}
 `;
 
 export const HelperText = styled.p<IHelperText>`
-	color: ${props => props.color ?? 'gray'};
+	color: ${props => props.color ?? 'white'};
 	font-weight: ${props => props.weight ?? 'normal'};
 	font-size: ${props => props.size ?? '14px'};
 	margin: 0;

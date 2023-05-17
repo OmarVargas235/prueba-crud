@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { mediaQueryListView } from "../../helpers/utils";
 
 export const Container = styled.section`
     
@@ -44,8 +43,6 @@ export const ListView = styled.div`
     height: 220px;
     overflow-y: auto;
     bottom: 0;
-
-    ${mediaQueryListView()};
 `;
 
 export const Card = styled.div`

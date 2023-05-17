@@ -12,7 +12,7 @@ interface IInput {
 
 const afterBefore = (borderColor: string | null): string => (`
     content: "✓";
-    border: 0.1em solid ${borderColor ?? '#CCC1F9'};
+    border: 2px solid ${borderColor ?? '#852845'};
     border-radius: 0.2em;
     display: inline-block;
     width: 20px;
@@ -32,9 +32,9 @@ export const Input = styled.input<IInput>`
     display: none;
 
     &:checked + label::before {
-        background-color: ${({ colorInput }) => colorInput ?? '#226EB5'};
-        border-color: ${({ colorInput }) => colorInput ?? '#226EB5'};
-        color: #fff;
+        background-color: ${({ colorInput }) => colorInput ?? '#EE3A57'};
+        border-color: ${({ colorInput }) => colorInput ?? '#EE3A57'};
+        color: #1C1E33;
     }
 
     &:disabled + label::before {
@@ -71,7 +71,7 @@ export const Label = styled.label<ILabel>`
 
     span {
         margin-left: 10px;
-        color: #424242;
+        color: white;
         font-weight: bold;
     }
 `;

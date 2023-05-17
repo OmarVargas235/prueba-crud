@@ -1,20 +1,21 @@
 // 1.- librerias
+import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 2.- components
-import HeaderPage from './HeaderPage';
+import { Container } from '../styled';
 import Form from "../../../layauts/form/Form";
 import TextField from "../../../layauts/textField/TextField";
 import { Text } from "../../../layauts/Text";
 import Button from "../../../layauts/button/Button";
+import Checkbox from "../../../layauts/checkbox/Checkbox";
 
 // 4.- interfaces
 import { HandleSubmit, HandleChange } from "../../../hooks/hookForm/interface";
 import { Model, RequeridFields } from "../container/Login";
 
 // 5.- iconos
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillLock } from "react-icons/ai";
+import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 
 interface Props {
     handleSubmit: HandleSubmit<Model>;
@@ -23,20 +24,26 @@ interface Props {
     form: Model;
     setForm: (v: Model) => void;
     errors: RequeridFields[];
+    isShowPassword: boolean;
+    setIsShowPassword: (v: boolean) => void;
 }
 
-const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors }: Props): JSX.Element => {
+const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors, isShowPassword,setIsShowPassword  }: Props): JSX.Element => {
 
     const history = useNavigate();
 
-    return <>
-        <HeaderPage />
-        
+    return <Container>        
         <Form
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
-            className="w-75 w-sm-100 w-md-75 w-lg-50"
+            className="form p-5"
         >
+            <Text
+                size='24px'
+                className='mb-4 text-center'
+                weight='600'
+            >Iniciar sesion</Text>
+
             <TextField
                 type="email"
                 name="email"
@@ -47,13 +54,11 @@ const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors
                 value={form.email}
                 classes="my-3"
                 isFull={true}
-                placeholder="Usuario (email)"
-                icon={<FaUserAlt size={20} color='#020101' />}
-                edge="end"
+                placeholder="Email"
             />
 
             <TextField
-                type="password"
+                type={isShowPassword ? "password" : "text"}
                 name="password"
                 handleChange={e => handleChange(e, setForm, form)}
                 isError={errors.includes('password')}
@@ -61,37 +66,46 @@ const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors
                 colorHelperText="#D32F2F"
                 value={form.password}
                 placeholder="Contraseña"
-                icon={<AiFillLock size={20} color='#020101' />}
+                icon={
+                    isShowPassword
+                    ? <IoEyeSharp
+                        size={25}
+                        color='white'
+                        onClick={() => setIsShowPassword(false)}
+                    />
+                    : <IoEyeOffSharp
+                        size={25}
+                        color='white'
+                        onClick={() => setIsShowPassword(true)}
+                    />
+                }
                 edge="end"
             />
 
-            <div className="w-100 text-center mt-4">
-                <Text
-                    size="17px"
-                    weight="bold"
-                    className="mb-2 pointer"
-                    color="#3F3E46"
-                    onClick={() => history('/register')}
-                >Crear Cuenta</Text>
-
-                <Text
-                    size="17px"
-                    weight="bold"
-                    className="pointer"
-                    color='#3F3E46'
-                    onClick={() => history('/reset-password')}
-                >¿Olvidaste tu contraseña?</Text>
-            </div>
+            <Checkbox
+                id='id'
+                name='name'
+                value='value'
+                handleChange={(e: ChangeEvent<HTMLInputElement>) => console.log(e)}
+            >Recordar</Checkbox>
 
             <div className="w-100 d-flex justify-content-center mt-4">
                 <Button
                     type="submit"
                     fullWidth={true}
                     classes="btn"
-                >Iniciar  Sesión</Button>
+                >Iniciar Sesión</Button>
             </div>
+
+            <Text
+                size="16px"
+                weight="bold"
+                className="mt-4 mb-2 pointer text-center"
+                color='#EE3A57'
+                onClick={() => history('/register-admin')}
+            >Crear Cuenta Administrador</Text>
         </Form>
-    </>;
+    </Container>;
 }
 
 export default LoginPage;
