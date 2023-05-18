@@ -45,6 +45,7 @@ const RegisterAdminPage = ({ handleChange, handleSubmit, onSubmit, form, setForm
                 size='24px'
                 className='mb-4 text-center'
                 weight='600'
+                color='white'
             >Registro usuario admin</Text>
 
             <TextField

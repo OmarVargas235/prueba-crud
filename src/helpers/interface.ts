@@ -3,15 +3,12 @@ interface IUser {
     lastName: string;
     company: string;
     email: string;
-    role: string;
+    role: 'USER' | 'ADMIN';
     _id: string;
 }
 
-interface IDataTable {
-    name: string;
-    lastName: string;
-    company: string;
-    email: string;
+interface IDataTable extends IUser {
+
 }
 
 export type DataTable = Readonly<IDataTable>;

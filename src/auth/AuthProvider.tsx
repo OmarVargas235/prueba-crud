@@ -18,7 +18,7 @@ import { auth, Event } from '../services/auth';
 
 // 6.- redux
 import { setIsActiveLoading } from '../redux/reducers/reducerBlockUI';
-// import { setUser } from '../redux/reducers/reducerUser';
+import { setUser } from '../redux/reducers/reducerUser';
 
 export interface AuthContextInterface {
 	isAuth: boolean;
@@ -58,6 +58,10 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
 				dispatch(setIsActiveLoading(true));
 
 				setIsAuth(true);
+
+				const userLS = JSON.parse(window.localStorage.getItem('user') ?? '{}');
+
+				dispatch(setUser(userLS));
 
 				dispatch(setIsActiveLoading(false));
 				resolve();

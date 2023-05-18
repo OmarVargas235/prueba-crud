@@ -44,6 +44,7 @@ const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors
                 size='24px'
                 className='mb-4 text-center'
                 weight='600'
+                color='white'
             >Iniciar sesion</Text>
 
             <TextField

@@ -12,11 +12,11 @@ export const ContainerIconAction = styled.div`
     align-items: center;
 
     &.edit {
-        background-color: ${props => props.theme.actions.edit};
+        background-color: rgb(28, 30, 51);
     }
 
     &.delete {
-        background-color: ${props => props.theme.actions.delete};
+        background-color: rgb(28, 30, 51);
     }
 `;
 

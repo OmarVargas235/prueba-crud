@@ -103,6 +103,7 @@ const Modal = ({ children, open, closeModal, classess='', textBtn, isButton=true
                                 onClick={close}
                                 size={25}
                                 className="pointer"
+                                color='white'
                             />
                         </div>
             

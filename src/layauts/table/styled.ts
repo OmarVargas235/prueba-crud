@@ -7,6 +7,7 @@ interface IThead {
     columns: number;
     align: 'left' | 'center' | 'right';
     widthGrid: string;
+    bgColor?: string;
 }
 
 interface ITh {
@@ -48,7 +49,9 @@ export const Thead = styled.article<IThead>`
     color: ${props => props.color ?? '#22285A'};
     font-size: ${props => props.size ?? '16px'};
     font-weight: ${props => props.weight ?? 'bold'};
-    border-radius: 5px;
+    background-color: ${props => props.bgColor ?? '#F3F6F9'};
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 
     display: grid;
     grid-template-columns: ${props => `repeat(${props.columns}, ${props.widthGrid})`};
@@ -56,7 +59,8 @@ export const Thead = styled.article<IThead>`
 `;
 
 export const TBody = styled.article`
-
+    background-color: rgb(238, 58, 87);
+    color: white;
 `;
 
 export const Tr = styled.div<ITr>`
@@ -69,12 +73,12 @@ export const Tr = styled.div<ITr>`
 export const Th = styled.div<ITh>`
     background-color: ${props => props.bgColor ?? '#F3F6F9'};
 
-    ${props => props.isFirst ? `border-top-left-radius: 5px;     border-bottom-left-radius: 5px;` : ''};
-    ${props => props.isLast ? `border-top-right-radius: 5px;     border-bottom-right-radius: 5px;` : ''};
+    ${props => props.isFirst ? `border-top-left-radius: 5px;` : ''};
+    ${props => props.isLast ? `border-top-right-radius: 5px;` : ''};
 `;
 
 export const Td = styled.div`
-
+    background-color: #EE3A57;
 `;
 
 export const BoxNumberPaginate = styled.div<{ isCurrent: boolean; }>`
@@ -91,7 +95,7 @@ export const BoxNumberPaginate = styled.div<{ isCurrent: boolean; }>`
         props => props.isCurrent
         ? `
             color: white;
-            background-color: #591df1;
+            background-color: #EE3A57;
         ` : `
             background-color: transparent;
             color: black;
@@ -100,6 +104,6 @@ export const BoxNumberPaginate = styled.div<{ isCurrent: boolean; }>`
 
     &:hover {
         color: white;
-        background-color: #591df1;
+        background-color: #EE3A57;
     }
 `;

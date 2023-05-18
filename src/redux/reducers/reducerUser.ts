@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../helpers/interface';
 
-export interface IInitState {
-    user: User;
-}
-
-const initialState: IInitState = {
-    user: {
-        email: '', img: null,
-        lastName: '', name: '',
-    },
+const initialState: User = {
+    _id: '',
+    company: '',
+    email: '',
+    lastName: '',
+    name: '',
+    role: 'USER'
 }
 
 export const userSlice = createSlice({
@@ -17,7 +15,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, { payload }: PayloadAction<User>) => ({
-            user: payload,
+            ...payload,
         }),
     },
 })

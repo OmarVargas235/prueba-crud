@@ -41,7 +41,7 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
     const [currentPage, setCurrentPage] = useState<number>(ValuesDefault.init);
     const [dataBody, setDataBody] = useState<DataBody>([]);
     const [search, setSeacrh] = useState<string>('');
-
+    
     useEffect(() => {
 
         const totalPage = Math.ceil(dataBody.length / currentTotal);
@@ -162,14 +162,16 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
                         dataBody.slice(init-1, end).map(((row, index) => (
                             <Tr
                                 key={index}
-                                className='p-2'
                                 columns={row.length}
                                 align={alignBody}
                                 widthGrid={width}
                             >
                                 {
                                     row.map((v, index) => (
-                                        <Td key={index}>{v}</Td>
+                                        <Td
+                                            key={index}
+                                            className='py-2'
+                                        >{v}</Td>
                                     ))
                                 }
                             </Tr>

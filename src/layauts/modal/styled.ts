@@ -19,7 +19,7 @@ export const Container = styled.section`
 export const ContainerModal = styled.div<IContainerModal>`
     border-radius: 3px;
     width: ${props => props.width};
-    background-color: ${props => props.theme.bg.bg3};
+    background-color: ${props => 'rgb(28, 30, 51)'};
     padding: 20px;
     border-radius: 5px;
 
