@@ -111,6 +111,7 @@ const FormUserPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, err
                     classes="my-3"
                     isFull={true}
                     placeholder="Email"
+                    isReadOnly={type === 'EDIT'}
                 />
 
                 <TextField

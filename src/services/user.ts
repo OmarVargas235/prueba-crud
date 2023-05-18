@@ -52,6 +52,24 @@ class User {
 		});
 	};
 
+	public editUser = async (id: string, body: BodyRegister): Promise<Response<string>> => {
+
+		return await new Promise((resolve) => {
+			axios
+				.put(`${ednpoint}/editUser?id=${id}`, body)
+				.then(({ data:resp }: AxiosResponse) => {
+
+					const { status, data } = resp as Response<string>;
+					resolve({ data: null, message: data ?? '', status });
+				})
+				.catch(({ response }: AxiosError) => {
+
+					const error = response !== undefined ? generateError(response) : generateError(null);
+					resolve(error);
+				});
+		});
+	};
+
 	public getUsers = async (): Promise<Response<IUser[]>> => {
 
 		return await new Promise((resolve) => {

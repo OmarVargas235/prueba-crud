@@ -1,6 +1,6 @@
 // 1.- librerias
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // 2.- components
 import FormUserPage from "../components/FormUserPage";
@@ -13,7 +13,8 @@ import { alert, validateEmail } from '../../../helpers/utils';
 
 // 5.- redux
 import { setIsActiveLoading } from '../../../redux/reducers/reducerBlockUI';
-import { setOpenModalUser } from '../../../redux/reducers/openModalUser';
+import { setOpenModalUser, IInitState } from '../../../redux/reducers/openModalUser';
+import { RootState } from "../../../redux/reducers";
 
 // 6.- services
 import { user } from '../../../services/user';
@@ -32,6 +33,8 @@ export type RequeridFields = typeof requeridFields[number];
 
 const FormUser = (): JSX.Element => {
 
+    const { type: typeEditOrCreate, user:userRedux } = useSelector<RootState, IInitState>(state => state.modalUser);
+
     const dispatch = useDispatch();
 
     const { handleSubmit, handleChange, validateFields, errors, setValuesDefault } = useForm<Model, RequeridFields>();
@@ -49,6 +52,26 @@ const FormUser = (): JSX.Element => {
         repeatPassword: '',
     });
 
+    useEffect(() => {
+
+        if (typeEditOrCreate !== 'EDIT') return undefined;
+
+        setForm({
+            name: userRedux.name,
+            lastName: userRedux.lastName,
+            company: userRedux.company,
+            email: userRedux.email,
+            password: '',
+            repeatPassword: '',
+        });
+
+        setValuesDefault('name', userRedux.name);
+        setValuesDefault('lastName', userRedux.lastName);
+        setValuesDefault('company', userRedux.company);
+        setValuesDefault('email', userRedux.email);
+
+    }, [typeEditOrCreate, userRedux]);
+
     const onSubmit = async (model: object): Promise<void> => {
     
         const newModel = model as Model;
@@ -65,7 +88,9 @@ const FormUser = (): JSX.Element => {
 
         dispatch(setIsActiveLoading(true));
 
-        const result = await user.registerUser(newModel);
+        const result = typeEditOrCreate === 'EDIT'
+            ? await user.editUser(userRedux._id, newModel)
+            : await user.registerUser(newModel);
 
         dispatch(setIsActiveLoading(false));
 

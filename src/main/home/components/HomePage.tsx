@@ -35,9 +35,10 @@ interface Props {
     deleteUser: (v: string, isModal: boolean) => Promise<void>;
     isDelte: boolean;
     setIsDelete: (v: boolean) => void;
+    edit: (v: User) => void;
 }
 
-const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, users, deleteUser, isDelte, setIsDelete }: Props): JSX.Element => {
+const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, users, deleteUser, isDelte, setIsDelete, edit }: Props): JSX.Element => {
 
     const { name, lastName, _id, role } = useSelector<RootState, User>(state => state.user);
 
@@ -49,7 +50,7 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
                 weight="bold"
                 size="16px"
                 color="white"
-            >Para deslogearse, click en el avatar {'------------------------------>'}</Text>
+            >Para cerrar sesión, click en el avatar {'------------------------------>'}</Text>
 
             <Avatar
                 width="50px"
@@ -57,7 +58,18 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
                 className="pointer"
                 onClick={() => setIsShow(!isShow)}
                 id="closeMenu"
-            >{name.charAt(0).toUpperCase()}{lastName.charAt(0).toUpperCase()}</Avatar>
+            >
+                <span
+                    className="mr-1"
+                    onClick={() => setIsShow(!isShow)}
+                    id="closeMenu"
+                >{name.charAt(0).toUpperCase()}</span>
+
+                <span
+                    onClick={() => setIsShow(!isShow)}
+                    id="closeMenu"
+                >{lastName.charAt(0).toUpperCase()}</span>
+            </Avatar>
 
             {
                 isShow ? <ContainerCloseSession className="position-absolute p-2 text-center">
@@ -86,11 +98,11 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
 
         <Table
             thead={thead}
-            tbody={tbody(users, ()=>{ dispatch(setOpenModalUser({ isActive: true, type: 'EDIT', updateTable: false })) }, deleteUser, _id, role, badgeData.id === 2)}
+            tbody={tbody(users, edit, deleteUser, _id, role, badgeData.id === 2)}
             width='180px'
             refresh={()=> window.location.reload()}
             addUser={()=>  dispatch(setOpenModalUser({ isActive: true, type: 'CREATE' })) }
-            isNewUser={true}
+            isNewUser={role === 'ADMIN'}
         />
 
         <Modal

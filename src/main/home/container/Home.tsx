@@ -9,7 +9,6 @@ import HomePage from "../components/HomePage";
 import { OptionsBadge } from "../interface";
 import { User } from '../../../helpers/interface';
 import { RootState } from "../../../redux/reducers";
-import { IInitState } from '../../../redux/reducers/openModalUser';
 
 // 4.- services
 import { auth } from '../../../services/auth';
@@ -21,6 +20,7 @@ import { AuthContext } from '../../../auth/AuthProvider';
 
 // 6.- redux
 import { setIsActiveLoading } from '../../../redux/reducers/reducerBlockUI';
+import { IInitState, setOpenModalUser, setDataModalUser } from '../../../redux/reducers/openModalUser';
 
 // 7.- utils
 import { alert } from '../../../helpers/utils';
@@ -126,6 +126,12 @@ const Home = (): JSX.Element => {
         dispatch(setIsActiveLoading(false));
     }
 
+    const edit = (data: User): void => {
+        
+        dispatch(setDataModalUser(data));
+        dispatch(setOpenModalUser({ isActive: true, type: 'EDIT', updateTable: false }));
+    }
+
     return <HomePage
         badgeData={badgeData}
         setBadgeData={setBadgeData}
@@ -136,6 +142,7 @@ const Home = (): JSX.Element => {
         deleteUser={deleteUser}
         isDelte={isDelte}
         setIsDelete={setIsDelete}
+        edit={edit}
     />;
 }
 
