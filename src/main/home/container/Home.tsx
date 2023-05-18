@@ -1,5 +1,5 @@
 // 1.- librerias
-import { useState, useEffect, useLayoutEffect, useContext } from "react";
+import { useState, useEffect, useLayoutEffect, useContext, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // 2.- components
@@ -14,6 +14,7 @@ import { IInitState } from '../../../redux/reducers/openModalUser';
 // 4.- services
 import { auth } from '../../../services/auth';
 import { user } from '../../../services/user';
+import { history } from '../../../services/history';
 
 // 5.- context
 import { AuthContext } from '../../../auth/AuthProvider';
@@ -39,6 +40,24 @@ const Home = (): JSX.Element => {
     const [isDelte, setIsDelete] = useState<boolean>(false);
     const [updateTable, setUpdateTable] = useState<boolean>(false);
 
+    const callAPIUsers = useCallback(async () => {
+
+        if (badgeData.id === -1) return undefined;
+
+        dispatch(setIsActiveLoading(true));
+
+        const result = badgeData.id === 1
+            ? await user.getUsers()
+            : await history.getUsers();
+
+        dispatch(setIsActiveLoading(false));
+
+        if (result.status !== 200) return alert({ dispatch, isAlertSuccess: false, message: result.message });
+
+        setUsers(result.data ?? []);
+
+    }, [badgeData]);
+
     useLayoutEffect(() => {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,22 +82,9 @@ const Home = (): JSX.Element => {
 
     useEffect(() => {
 
-        async function callAPI(): Promise<void> {
+        void callAPIUsers();
 
-            dispatch(setIsActiveLoading(true));
-
-            const result = await user.getUsers();
-
-            dispatch(setIsActiveLoading(false));
-
-            if (result.status !== 200) return alert({ dispatch, isAlertSuccess: false, message: result.message });
-
-            setUsers(result.data ?? []);
-        }
-
-        void callAPI();
-
-    }, [updateTable, updateTableUser]);
+    }, [updateTable, updateTableUser, callAPIUsers]);
 
     const closeSesion = (): void => {
         auth.logout();
@@ -94,7 +100,7 @@ const Home = (): JSX.Element => {
         dispatch(setIsActiveLoading(true));
 
         const result = await user.deleteUser(idUserDelete);
-        console.log(result);
+
         dispatch(setIsActiveLoading(false));
         setIsDelete(false);
 
@@ -102,6 +108,22 @@ const Home = (): JSX.Element => {
 
         alert({ dispatch, isAlertSuccess: true, message: result.message });
         setUpdateTable(!updateTable);
+
+        const data = users.find(v => v._id === idUserDelete) as User;
+        void createHistory(data);
+    }
+
+    const createHistory = async (data: User): Promise<void> => {
+
+        dispatch(setIsActiveLoading(true));
+
+        const result = await history.registerUser(data);
+
+        if (result.status !== 200) return alert({ dispatch, isAlertSuccess: false, message: result.message });
+
+        alert({ dispatch, isAlertSuccess: true, message: result.message });
+
+        dispatch(setIsActiveLoading(false));
     }
 
     return <HomePage

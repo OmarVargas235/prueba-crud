@@ -29,17 +29,22 @@ interface Props {
     errors: RequeridFields[];
     isShowPassword: {isShow1: boolean; isShow2: boolean};
     setIsShowPassword: (v: {isShow1: boolean; isShow2: boolean}) => void;
+    clearForm: () => void;
 }
 
-const FormUserPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors, isShowPassword,setIsShowPassword  }: Props): JSX.Element => {
+const FormUserPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors, isShowPassword,setIsShowPassword, clearForm }: Props): JSX.Element => {
 
     const dispatch = useDispatch();
 
     const { isActive, type } = useSelector<RootState, IInitState>(state => state.modalUser);
-
+    
     return <Container>        
         <Modal
-            closeModal={(v) => dispatch(setOpenModalUser({ isActive: v, type: 'CREATE' }))}
+            closeModal={(v) => {
+
+                dispatch(setOpenModalUser({ isActive: v, type: 'CREATE' }));
+                clearForm();
+            }}
             open={isActive}
             textBtn=''
             isButton={false}

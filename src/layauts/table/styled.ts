@@ -98,7 +98,7 @@ export const BoxNumberPaginate = styled.div<{ isCurrent: boolean; }>`
             background-color: #EE3A57;
         ` : `
             background-color: transparent;
-            color: black;
+            color: white;
         `
     }
 

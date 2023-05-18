@@ -86,7 +86,7 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
 
         <Table
             thead={thead}
-            tbody={tbody(users, ()=>{ dispatch(setOpenModalUser({ isActive: true, type: 'EDIT', updateTable: false })) }, deleteUser, _id, role)}
+            tbody={tbody(users, ()=>{ dispatch(setOpenModalUser({ isActive: true, type: 'EDIT', updateTable: false })) }, deleteUser, _id, role, badgeData.id === 2)}
             width='180px'
             refresh={()=> window.location.reload()}
             addUser={()=>  dispatch(setOpenModalUser({ isActive: true, type: 'CREATE' })) }
@@ -106,7 +106,10 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
                 isCheck={false}
             />
             
-            <Text className="text-center mb-3">Estas seguro de eliminar este producto?</Text>
+            <Text
+                className="text-center mb-3"
+                color="white"
+            >Estas seguro de eliminar este producto?</Text>
 
             <div className='d-flex justify-content-center'>
                 <Button

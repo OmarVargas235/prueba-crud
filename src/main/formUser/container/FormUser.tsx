@@ -74,6 +74,11 @@ const FormUser = (): JSX.Element => {
         alert({ dispatch, isAlertSuccess: true, message: result.message });
         dispatch(setOpenModalUser({ isActive: false, type: 'CREATE', updateTable: true }));
 
+        clearForm();
+    }
+
+    const clearForm = (): void => {
+
         setForm({
             name: '',
             lastName: '',
@@ -100,6 +105,7 @@ const FormUser = (): JSX.Element => {
         errors={errors}
         isShowPassword={isShowPassword}
         setIsShowPassword={setIsShowPassword}
+        clearForm={clearForm}
     />;
 }
 

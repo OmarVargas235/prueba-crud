@@ -95,13 +95,14 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
     const handleSearch = (e: ChangeEvent<HTMLInputElement>): void => {
 
         const text: string = e.target.value.toLowerCase().trim();
+
         const filter = tbody.filter(arr => {
 
-            const copyArr: Array<string | JSX.Element> = JSON.parse(JSON.stringify(arr));
-            copyArr.pop();
+            const sliceLastElement = arr.slice(0, -1);
+            const copyArr: string[] = JSON.parse(JSON.stringify(sliceLastElement));
 
-            return copyArr.filter(v => typeof v === 'object'
-                ? v.props.elements[0].name.toLowerCase().trim().includes(text)
+            return copyArr.filter(v => v == null
+                ? false
                 : v.toLowerCase().trim().includes(text)
             ).length > 0;
         });
@@ -109,6 +110,7 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
         setSeacrh(text);
         setDataBody(filter);
         setInit(1);
+        setCurrentPage(1);
         setEnd(currentTotal);
     }
 
