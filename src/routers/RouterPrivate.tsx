@@ -1,19 +1,27 @@
 // 1.- librerias
+import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 // 2.- components
-import Home from '../main/home';
+import Spinner from '../layauts/spinner/Spinner';
+const Home = lazy(async () => await import('../main/home'));
+const FormUser = lazy(async () => await import('../main/formUser'));
 
 const RouterPublic = (): JSX.Element => {
 
-    return <Routes>
-        <Route path='/home' element={<Home />} />
+    return <Suspense fallback={<Spinner isLoading={true} />}>
 
-        <Route
-            path="*"
-            element={<Navigate to="/home" replace />}
-        />
-    </Routes>;
+        <FormUser />
+
+        <Routes>
+            <Route path='/home' element={<Home />} />
+
+            <Route
+                path="*"
+                element={<Navigate to="/home" replace />}
+            />
+        </Routes>
+    </Suspense>;
 }
 
 export default RouterPublic;

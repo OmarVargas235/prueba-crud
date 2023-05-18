@@ -7,14 +7,14 @@ import { OptionsBadge } from "./interface";
 
 export const thead = ['Nombre', 'Apellido', 'Empresa', 'Email', 'Rol', 'Acciones'];
 
-export const tbody = (data: DataTable[], edit: (v: DataTable) => void, deleteUser: (v: string, isModal: boolean) => Promise<void>, id: string): DataBody => {
+export const tbody = (data: DataTable[], edit: (v: DataTable) => void, deleteUser: (v: string, isModal: boolean) => Promise<void>, id: string, role: 'USER' | 'ADMIN'): DataBody => {
 
     return data.map((v, index): any[] => (
         [
             v.name, v.lastName, v.email, v.company, v.role,
             <div key={2} className='d-flex justify-content-center'>
                 {
-                    (id === v._id || v.role === 'USER') ? null
+                    (id === v._id || role === 'USER') ? null
                     : <>
                         <ContainerIconAction
                             className='mr-3 pointer edit'

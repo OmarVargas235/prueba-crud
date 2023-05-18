@@ -1,6 +1,6 @@
 // 1.- librerias
 import { useState, useEffect, useLayoutEffect, useContext } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // 2.- components
 import HomePage from "../components/HomePage";
@@ -8,6 +8,8 @@ import HomePage from "../components/HomePage";
 // 3.- interfaces
 import { OptionsBadge } from "../interface";
 import { User } from '../../../helpers/interface';
+import { RootState } from "../../../redux/reducers";
+import { IInitState } from '../../../redux/reducers/openModalUser';
 
 // 4.- services
 import { auth } from '../../../services/auth';
@@ -25,6 +27,8 @@ import { alert } from '../../../helpers/utils';
 const Home = (): JSX.Element => {
 
     const dispatch = useDispatch();
+
+    const { updateTable:updateTableUser } = useSelector<RootState, IInitState>(state => state.modalUser);
 
     const { setIsAuth } = useContext(AuthContext);
 
@@ -74,7 +78,7 @@ const Home = (): JSX.Element => {
 
         void callAPI();
 
-    }, [updateTable]);
+    }, [updateTable, updateTableUser]);
 
     const closeSesion = (): void => {
         auth.logout();

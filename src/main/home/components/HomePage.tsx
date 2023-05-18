@@ -1,5 +1,5 @@
 // 1.- librerias
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // 2.- components
 import Badge from "../../../layauts/Badge";
@@ -22,6 +22,9 @@ import { RootState } from "../../../redux/reducers";
 // 5.- icons
 import { MdDelete } from "react-icons/md";
 
+// 6.- redux
+import { setOpenModalUser } from '../../../redux/reducers/openModalUser';
+
 interface Props {
     badgeData: OptionsBadge;
     setBadgeData: (v: OptionsBadge) => void;
@@ -36,7 +39,9 @@ interface Props {
 
 const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, users, deleteUser, isDelte, setIsDelete }: Props): JSX.Element => {
 
-    const { name, lastName, _id } = useSelector<RootState, User>(state => state.user);
+    const { name, lastName, _id, role } = useSelector<RootState, User>(state => state.user);
+
+    const dispatch = useDispatch();
 
     return <Container className="p-5 w-100">
         <div className="w-100 d-flex justify-content-between position-relative">
@@ -81,10 +86,10 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
 
         <Table
             thead={thead}
-            tbody={tbody(users, ()=>{}, deleteUser, _id)}
+            tbody={tbody(users, ()=>{ dispatch(setOpenModalUser({ isActive: true, type: 'EDIT', updateTable: false })) }, deleteUser, _id, role)}
             width='180px'
             refresh={()=> window.location.reload()}
-            addUser={()=>{}}
+            addUser={()=>  dispatch(setOpenModalUser({ isActive: true, type: 'CREATE' })) }
             isNewUser={true}
         />
 
