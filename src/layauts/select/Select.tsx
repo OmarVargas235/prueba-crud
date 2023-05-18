@@ -1,5 +1,5 @@
 // 1.- librerias
-import { useState, useEffect, ChangeEvent, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, ChangeEvent, useRef } from 'react';
 
 // 2.- estilos
 import { Container, Current, ContainerOptions, Option, Label, ContainerAutoComplete } from './styled';
@@ -58,7 +58,7 @@ const Select = ({ options, handleChange, className='', classNameSelect='', label
     const [currentValue, setCurrentValue] = useState<string>('');
     const [optionsLocal, setOptionsLocal] = useState<IOption[]>([]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         window.addEventListener('click', (e: any) => {

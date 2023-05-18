@@ -1,5 +1,5 @@
 // 1.- librerias
-import { useState, useContext } from "react";
+import { useState, useContext, useLayoutEffect, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 
 // 2.- components
@@ -31,23 +31,40 @@ const Login = (): JSX.Element => {
 
     const { submitLogin } = useContext(AuthContext);
 
-    const { handleSubmit, handleChange, validateFields, errors } = useForm<Model, RequeridFields>();
+    const { handleSubmit, handleChange, validateFields, errors, setValuesDefault } = useForm<Model, RequeridFields>();
 
+    const [isChecked, setIsChecked] = useState<boolean>(false);
     const [isShowPassword, setIsShowPassword] = useState<boolean>(true);
     const [form, setForm] = useState<Model>({
         email: '',
         password: ''
     });
 
+    useLayoutEffect(() => {
+
+        const getEmailLS = window.localStorage.getItem('remember') ?? '';
+
+        setForm(state => ({
+            ...state,
+            email: getEmailLS,
+        }));
+
+        setIsChecked(getEmailLS !== '');
+
+        setValuesDefault('email', getEmailLS);
+
+    }, []);
+
     const onSubmit = async (model: object): Promise<void> => {
     
         const newModel = model as Model;
-        
+
         const isError: boolean = validateFields(newModel, [...requeridFields]);
         
         if (isError) return;
 
         const isValidateEmail = validateEmail(newModel.email);
+
         if (!isValidateEmail) return alert({ dispatch, isAlertSuccess: false, message: 'Correo invalido' });
 
         dispatch(setIsActiveLoading(true));
@@ -59,6 +76,17 @@ const Login = (): JSX.Element => {
         if (result.status !== 200) return alert({ dispatch, isAlertSuccess: false, message: result.message });
     }
 
+    const rememberPassword = (e: ChangeEvent<HTMLInputElement>): void => {
+
+        const isChecked = e.target.checked;
+
+        isChecked
+            ? window.localStorage.setItem('remember', form.email)
+            : window.localStorage.removeItem('remember');
+
+        setIsChecked(isChecked);
+    }
+
     return <LoginPage
         handleSubmit={handleSubmit}
         handleChange={handleChange}
@@ -68,6 +96,8 @@ const Login = (): JSX.Element => {
         errors={errors}
         isShowPassword={isShowPassword}
         setIsShowPassword={setIsShowPassword}
+        rememberPassword={rememberPassword}
+        isChecked={isChecked}
     />;
 }
 

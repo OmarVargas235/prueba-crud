@@ -26,9 +26,11 @@ interface Props {
     errors: RequeridFields[];
     isShowPassword: boolean;
     setIsShowPassword: (v: boolean) => void;
+    rememberPassword: (e: ChangeEvent<HTMLInputElement>) => void;
+    isChecked: boolean;
 }
 
-const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors, isShowPassword,setIsShowPassword  }: Props): JSX.Element => {
+const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors, isShowPassword,setIsShowPassword, rememberPassword, isChecked  }: Props): JSX.Element => {
 
     const history = useNavigate();
 
@@ -86,7 +88,8 @@ const LoginPage = ({ handleChange, handleSubmit, onSubmit, form, setForm, errors
                 id='id'
                 name='name'
                 value='value'
-                handleChange={(e: ChangeEvent<HTMLInputElement>) => console.log(e)}
+                handleChange={rememberPassword}
+                isChecked={isChecked}
             >Recordar</Checkbox>
 
             <div className="w-100 d-flex justify-content-center mt-4">

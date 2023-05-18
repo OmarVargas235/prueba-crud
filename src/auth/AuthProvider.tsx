@@ -34,7 +34,7 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
 
 	const dispatch = useDispatch();
 
-    const [isAuth, setIsAuth] = useState<boolean>(true);
+    const [isAuth, setIsAuth] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect((): void => {
@@ -57,30 +57,19 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
 
 				dispatch(setIsActiveLoading(true));
 
-				// setIsAuth(true);
-				// auth.signInWithToken()
-				// 	.then(resp => {
+				setIsAuth(true);
 
-				// 		if (resp.data === null) return;
-
-				// 		dispatch(setUser({
-				// 			...resp.data,
-				// 			img: resp.data.img === 'null' ? null : resp.data.img
-				// 		}));
-				// 	})
-				// 	.catch(err => alert({ dispatch, isAlertSuccess: false, message: err.message }))
-				// 	.finally(() => dispatch(setIsActiveLoading(false)));
-
+				dispatch(setIsActiveLoading(false));
 				resolve();
 
 			} else if (event === 'onAutoLogout') {
 
-				setIsAuth(true);
+				setIsAuth(false);
 				resolve();
 
 			} else if (event === 'onNoAccessToken') {
 
-				setIsAuth(true);
+				setIsAuth(false);
 				resolve();
 			}
 		});

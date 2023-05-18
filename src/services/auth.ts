@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import jwtDecode from 'jwt-decode';
 
+import { User } from '../helpers/interface';
 import { Response } from './interfaces';
 import { generateError } from './utils';
-import { User } from '../helpers/interface';
 
 interface IToken {
 	email: string;
@@ -12,8 +12,6 @@ interface IToken {
 }
 
 export type Event = 'onAutoLogin' | 'onAutoLogout' | 'onNoAccessToken' | '';
-
-const ednpoint = '/auth';
 
 class Auth {
 	private typeEvent: Event = '';
@@ -30,26 +28,25 @@ class Auth {
 		return this.typeEvent;
 	};
 
-	public signIn = async (email: string, password: string): Promise<Response<{token: string; email: string;}>> => {
+	public signIn = async (email: string, password: string): Promise<Response<{accessToken: string; user: User;}>> => {
 
 		return await new Promise((resolve) => {
 			axios
-				.post(ednpoint, {
+				.post('/api/login', {
 					email,
 					password,
 				})
 				.then(({ data:resp }: AxiosResponse) => {
 
-					const { status, data, message } = resp as Response<{token: string; email: string;}>;
+					const { status, data, message } = resp as Response<{accessToken: string; user: User;}>;
 
-					this.setSession(data === null ? null : data.token);
+					this.setSession(data === null ? null : data.accessToken);
+					this.setSessionUser(data === null ? null : data.user);
 
 					resolve({ data, message, status });
 				})
 				.catch(({ response }: AxiosError) => {
-
 					const error = response !== undefined ? generateError(response) : generateError(null);
-
 					resolve(error);
 				});
 		});
@@ -69,18 +66,40 @@ class Auth {
 		}
 	};
 
+	public setSessionUser = (user: User | null): void => {
+
+		if (user !== null) {
+
+			window.localStorage.setItem('user', window.JSON.stringify(user));
+
+		} else {
+
+			localStorage.removeItem('user');
+		}
+	};
+
 	public getAccessToken = (): string => {
 
 		return window.localStorage.getItem('jwt_access_token') ?? '';
 	};
 
-	public logout = (): void => this.setSession(null);
+	public getUser = (): string => {
+
+		return window.localStorage.getItem('user') ?? '';
+	};
+
+	public logout = (): void => {
+
+		this.setSession(null);
+		this.setSessionUser(null);
+	}
 
 	private readonly handleAuthentication = (): void => {
 
 		const ACCESS_TOKEN = this.getAccessToken();
+		const USER = this.getUser();
 
-		if (ACCESS_TOKEN === '') {
+		if (ACCESS_TOKEN === '' || USER === '') {
 			this.on('onNoAccessToken');
 
 			return;

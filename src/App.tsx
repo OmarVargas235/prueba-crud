@@ -8,7 +8,7 @@ import AppRouter from './routers/AppRouter';
 /**
  * Axios HTTP Request defaults
  */
-axios.defaults.baseURL = 'VITE_BASE_URL';
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.common['Access-Control-Allow-Methods'] = '*';
 axios.defaults.headers.common['Content-Type'] = 'application/json';

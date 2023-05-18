@@ -10,6 +10,12 @@
     
 ## Uso
 
+* crear archivo .env en la raiz del proyecto
+
+##### Dentro del archivo .env
+* ```VITE_BASE_URL="http://localhost:5000"```
+
+#### ejecutar comando
 * ```npm run dev``` o ```yarn dev```
 
 ## scrips

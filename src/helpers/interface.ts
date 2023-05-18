@@ -3,6 +3,8 @@ interface IUser {
     lastName: string;
     company: string;
     email: string;
+    role: string;
+    _id: string;
 }
 
 interface IDataTable {
