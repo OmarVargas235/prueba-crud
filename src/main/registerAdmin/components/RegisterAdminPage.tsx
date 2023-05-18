@@ -30,12 +30,17 @@ const RegisterAdminPage = ({ handleChange, handleSubmit, onSubmit, form, setForm
 
     const history = useNavigate();
 
-    return <Container className='py-5'>        
+    return <Container className='py-5'>
         <Form
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
             className="form p-5"
         >
+            <Text
+                color='white'
+                className='mb-4'
+            >Nota: Todos los registros de usuarios con este formulario son usuarios con rol de admin</Text>
+
             <Text
                 size='24px'
                 className='mb-4 text-center'
@@ -49,7 +54,7 @@ const RegisterAdminPage = ({ handleChange, handleSubmit, onSubmit, form, setForm
                 isError={errors.includes('name')}
                 helperText={errors.includes('name') ? "Nombre requerido" : ''}
                 colorHelperText="#D32F2F"
-                value={form.email}
+                value={form.name}
                 classes="my-3"
                 isFull={true}
                 placeholder="Nombre"
@@ -62,7 +67,7 @@ const RegisterAdminPage = ({ handleChange, handleSubmit, onSubmit, form, setForm
                 isError={errors.includes('lastName')}
                 helperText={errors.includes('lastName') ? "Apellido requerido" : ''}
                 colorHelperText="#D32F2F"
-                value={form.email}
+                value={form.lastName}
                 classes="my-3"
                 isFull={true}
                 placeholder="Apellido"
@@ -75,7 +80,7 @@ const RegisterAdminPage = ({ handleChange, handleSubmit, onSubmit, form, setForm
                 isError={errors.includes('company')}
                 helperText={errors.includes('company') ? "Compañia requerido" : ''}
                 colorHelperText="#D32F2F"
-                value={form.email}
+                value={form.company}
                 classes="my-3"
                 isFull={true}
                 placeholder="Compañia"
@@ -162,7 +167,7 @@ const RegisterAdminPage = ({ handleChange, handleSubmit, onSubmit, form, setForm
                     type="submit"
                     fullWidth={true}
                     classes="btn"
-                >Iniciar Sesión</Button>
+                >Registrar</Button>
             </div>
 
             <Text

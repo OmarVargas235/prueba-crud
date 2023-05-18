@@ -3,7 +3,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Response } from './interfaces';
 import { generateError } from './utils';
 
-const ednpoint = 'users';
+const ednpoint = '/api';
 
 interface BodyRegister {
     name: string;
@@ -11,7 +11,6 @@ interface BodyRegister {
     email: string;
     company: string;
     password: string;
-    repeatPassword: string;
 }
 
 class User {
@@ -21,16 +20,15 @@ class User {
         axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
     }
 
-    public register = async (body: BodyRegister): Promise<Response<null>> => {
+    public registerUserAdmin = async (body: BodyRegister): Promise<Response<string>> => {
 
 		return await new Promise((resolve) => {
 			axios
-				.post(`${ednpoint}`, body)
+				.post(`${ednpoint}/createUserWithOutToken`, body)
 				.then(({ data:resp }: AxiosResponse) => {
 
-					const { status, data, message } = resp as Response<null>;
-
-					resolve({ data, message, status });
+					const { status, data } = resp as Response<string>;
+					resolve({ data: null, message: data ?? '', status });
 				})
 				.catch(({ response }: AxiosError) => {
 
@@ -41,4 +39,4 @@ class User {
 	};
 }
 
-export const dataUser = new User();
+export const user = new User();

@@ -1,5 +1,5 @@
 // 1.- librerias
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 // 2.- components
@@ -8,14 +8,14 @@ import RegisterAdminPage from "../components/RegisterAdminPage";
 // 3.- hooks
 import { useForm } from "../../../hooks/hookForm/useForm";
 
-// 4.- context
-import { AuthContext } from '../../../auth/AuthProvider';
-
-// 5.- utils
+// 4.- utils
 import { alert, validateEmail } from '../../../helpers/utils';
 
-// 6.- redux
+// 5.- redux
 import { setIsActiveLoading } from '../../../redux/reducers/reducerBlockUI';
+
+// 6.- services
+import { user } from '../../../services/user';
 
 export interface Model {
     name: string;
@@ -32,8 +32,6 @@ export type RequeridFields = typeof requeridFields[number];
 const RegisterAdmin = (): JSX.Element => {
 
     const dispatch = useDispatch();
-
-    const { submitLogin } = useContext(AuthContext);
 
     const { handleSubmit, handleChange, validateFields, errors } = useForm<Model, RequeridFields>();
 
@@ -54,19 +52,23 @@ const RegisterAdmin = (): JSX.Element => {
     
         const newModel = model as Model;
         const isError: boolean = validateFields(newModel, [...requeridFields]);
-        
+
         if (isError) return;
 
         const isValidateEmail = validateEmail(newModel.email);
         if (!isValidateEmail) return alert({ dispatch, isAlertSuccess: false, message: 'Correo invalido' });
 
+        if (newModel.password !== newModel.repeatPassword) return alert({ dispatch, isAlertSuccess: false, message: 'Los passwords no son iguales' });
+
         dispatch(setIsActiveLoading(true));
 
-        const result = await submitLogin(newModel);
+        const result = await user.registerUserAdmin(newModel);
 
         dispatch(setIsActiveLoading(false));
 
         if (result.status !== 200) return alert({ dispatch, isAlertSuccess: false, message: result.message });
+
+        alert({ dispatch, isAlertSuccess: true, message: result.message });
     }
 
     return <RegisterAdminPage
