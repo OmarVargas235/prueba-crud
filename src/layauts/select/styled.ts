@@ -27,11 +27,11 @@ export const ContainerOptions = styled.div`
 export const Option = styled.div<{ isActive: boolean; }>`
     transition: .1s background-color ease-in, .1s color ease-in;
 
-    ${props => props.isActive ? 'background-color: #2879A7' : ''};
+    ${props => props.isActive ? 'background-color: rgb(238, 58, 87)' : ''};
     ${props => props.isActive ? 'color: white' : ''};
     
     &:hover {
-        background-color: #2879A7;
+        background-color: rgb(238, 58, 87);
         color: white;
     }
 `;

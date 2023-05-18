@@ -98,7 +98,6 @@ const TextField = ({
 						className={`${id} ${classesInput}`}
 						autoComplete={"off"}
 						ref={refInput}
-						id={id}
 					/>
 				}
 

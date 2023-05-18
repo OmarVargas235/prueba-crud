@@ -3,6 +3,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { ContainerIconAction } from "./styled";
 import { DataBody } from "../../layauts/table/Table";
 import { DataTable } from "../../helpers/interface";
+import { OptionsBadge } from "./interface";
 
 export const thead = ['Nombre', 'Apellido', 'Empresa', 'Email'];
 
@@ -29,3 +30,8 @@ export const tbody = (data: DataTable[], edit: (v: DataTable) => void, deletePro
         ]
     ));
 }
+
+export const optionsBadges: OptionsBadge[] = [
+    { name: 'Activos', id: 1 },
+    { name: 'Inactivos', id: 2 },
+];

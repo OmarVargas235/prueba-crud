@@ -13,7 +13,7 @@ export const Container = styled.section`
 export const ContainerModal = styled.div`
     border-radius: 6px;
     width: 330px;
-    background-color: ${props => props.theme.bg.bg3};
+    background-color: white;
     padding: 20px;
 `;
 

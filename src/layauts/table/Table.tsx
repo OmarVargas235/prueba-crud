@@ -137,44 +137,46 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
                 >Refrescar</Button>
             </div>
         </div>
+        
+        <div className='d-flex justify-content-center'>
+            <div className='container-table'>
+                <Thead
+                    columns={thead.length}
+                    align={alignHead}
+                    widthGrid={width}
+                >
+                    {
+                        thead.map((v, index) => (
+                            <Th
+                                key={index}
+                                className='p-2'
+                                isFirst={index === 0}
+                                isLast={index === thead.length -1}
+                            >{v}</Th>
+                        ))
+                    }
+                </Thead>
 
-        <div className='container-table'>
-            <Thead
-                columns={thead.length}
-                align={alignHead}
-                widthGrid={width}
-            >
-                {
-                    thead.map((v, index) => (
-                        <Th
-                            key={index}
-                            className='p-2'
-                            isFirst={index === 0}
-                            isLast={index === thead.length -1}
-                        >{v}</Th>
-                    ))
-                }
-            </Thead>
-
-            <TBody>
-                {
-                    dataBody.slice(init-1, end).map(((row, index) => (
-                        <Tr
-                            key={index}
-                            className='p-2'
-                            columns={row.length}
-                            align={alignBody}
-                            widthGrid={width}
-                        >
-                            {
-                                row.map((v, index) => (
-                                    <Td key={index}>{v}</Td>
-                                ))
-                            }
-                        </Tr>
-                    )))
-                }
-            </TBody>
+                <TBody>
+                    {
+                        dataBody.slice(init-1, end).map(((row, index) => (
+                            <Tr
+                                key={index}
+                                className='p-2'
+                                columns={row.length}
+                                align={alignBody}
+                                widthGrid={width}
+                            >
+                                {
+                                    row.map((v, index) => (
+                                        <Td key={index}>{v}</Td>
+                                    ))
+                                }
+                            </Tr>
+                        )))
+                    }
+                </TBody>
+            </div>
         </div>
 
         <div className='d-flex align-items-start justify-content-between mt-4'>

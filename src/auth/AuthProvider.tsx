@@ -14,11 +14,11 @@ import { User } from '../helpers/interface';
 import { auth, Event } from '../services/auth';
 
 // 5.- utils
-import { alert } from '../helpers/utils';
+// import { alert } from '../helpers/utils';
 
 // 6.- redux
 import { setIsActiveLoading } from '../redux/reducers/reducerBlockUI';
-import { setUser } from '../redux/reducers/reducerUser';
+// import { setUser } from '../redux/reducers/reducerUser';
 
 export interface AuthContextInterface {
 	isAuth: boolean;
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
 
 	const dispatch = useDispatch();
 
-    const [isAuth, setIsAuth] = useState<boolean>(false);
+    const [isAuth, setIsAuth] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect((): void => {
@@ -75,12 +75,12 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
 
 			} else if (event === 'onAutoLogout') {
 
-				setIsAuth(false);
+				setIsAuth(true);
 				resolve();
 
 			} else if (event === 'onNoAccessToken') {
 
-				setIsAuth(false);
+				setIsAuth(true);
 				resolve();
 			}
 		});
