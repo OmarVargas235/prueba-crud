@@ -10,7 +10,7 @@
     
 ## Uso
 
-* crear archivo .env en la raiz del proyecto
+* crear archivo ```.env``` en la raiz del proyecto
 
 ##### Dentro del archivo .env
 * ```VITE_BASE_URL="http://localhost:5000"```
