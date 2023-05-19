@@ -22,7 +22,7 @@ export const ContainerIconAction = styled.div`
 
 export const ContainerCloseSession = styled.div`
     width: 150px;
-    bottom: -50px;
+    top: 110%;
     right: -40px;
     background-color: white;
     border-radius: 4px;

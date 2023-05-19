@@ -14,7 +14,7 @@ export const tbody = (data: DataTable[], edit: (v: DataTable) => void, deleteUse
             v.name, v.lastName, v.email, v.company, v.role,
             <div key={2} className='d-flex justify-content-center'>
                 {
-                    (id === v._id || role === 'USER' || isInactive) ? null
+                    (role === 'USER' || (v.role === 'ADMIN' && id !== v._id) || isInactive) ? null
                     : <>
                         <ContainerIconAction
                             className='mr-3 pointer edit'
@@ -22,13 +22,19 @@ export const tbody = (data: DataTable[], edit: (v: DataTable) => void, deleteUse
                         >
                             <BiEditAlt size={20} />
                         </ContainerIconAction>
-
-                        <ContainerIconAction
-                            className='pointer delete'
-                            onClick={() => {void deleteUser(v._id, true)}}
-                        >
-                            <IoCloseOutline size={20} />
-                        </ContainerIconAction>
+                        
+                        {
+                            v.role === 'ADMIN'
+                            ? <ContainerIconAction>
+                                <IoCloseOutline size={20} className="d-none" />
+                            </ContainerIconAction>
+                            : <ContainerIconAction
+                                className='pointer delete'
+                                onClick={() => {void deleteUser(v._id, true)}}
+                            >
+                                <IoCloseOutline size={20} />
+                            </ContainerIconAction>
+                        }
                     </>
                 }
 

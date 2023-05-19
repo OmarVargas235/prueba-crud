@@ -115,17 +115,17 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
     }
 
     return <Container className='p-4'>
-        <div className='d-flex justify-content-between align-items-center mb-4'>
+        <div className='d-flex justify-content-between align-items-center mb-4 container-header'>
             <TextField
                 handleChange={handleSearch}
                 name='search'
                 value={search}
-                icon={<AiOutlineSearch size={25} />}
+                icon={<AiOutlineSearch size={25} color='#EE3A57' />}
                 edge="start"
                 classesContainerInput='border-radius'
             />
 
-            <div className='d-flex'>
+            <div className='d-flex container-buttons'>
                 {
                     isNewUser
                     ? <Button classes='mr-2' handleClick={() => addUser()}>Nuevo usuario</Button>
@@ -183,7 +183,7 @@ const Table = ({ thead, tbody, width, alignHead='center', alignBody='center', re
             </div>
         </div>
 
-        <div className='d-flex align-items-start justify-content-between mt-4'>
+        <div className='d-flex align-items-start justify-content-between mt-4 container-footer'>
             <Select
                 options={[
                     { label: '10', value: 10 },

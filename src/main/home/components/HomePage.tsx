@@ -25,6 +25,9 @@ import { MdDelete } from "react-icons/md";
 // 6.- redux
 import { setOpenModalUser } from '../../../redux/reducers/openModalUser';
 
+// 7.- hooks
+import { useMediaQuery } from '../../../hooks/useMediaQuery';
+
 interface Props {
     badgeData: OptionsBadge;
     setBadgeData: (v: OptionsBadge) => void;
@@ -44,13 +47,18 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
 
     const dispatch = useDispatch();
 
+    const matches = useMediaQuery('(max-width: 632px)');
+
     return <Container className="p-5 w-100">
-        <div className="w-100 d-flex justify-content-between position-relative">
-            <Text
-                weight="bold"
-                size="16px"
-                color="white"
-            >Para cerrar sesión, click en el avatar {'------------------------------>'}</Text>
+        <div className={`w-100 d-flex ${matches ? 'justify-content-end' : 'justify-content-between'} position-relative`}>
+            {
+                matches ? null
+                : <Text
+                    weight="bold"
+                    size="16px"
+                    color="white"
+                >Para cerrar sesión, click en el avatar {'------------------------------>'}</Text>
+            }
 
             <Avatar
                 width="50px"
@@ -73,6 +81,9 @@ const HomePage = ({ badgeData, setBadgeData, isShow, setIsShow, closeSesion, use
 
             {
                 isShow ? <ContainerCloseSession className="position-absolute p-2 text-center">
+                    <Text className="text closeMenu">{name} {lastName}</Text>
+                    <Text className="text closeMenu">{role}</Text>
+
                     <Text
                         className="text closeMenu"
                         onClick={closeSesion}

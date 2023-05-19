@@ -27,8 +27,33 @@ export const Container = styled.section`
     border: 1px solid #BABCCB;
     border-radius: 10px;
 
+    .container-header {
+        @media (max-width: 426px) {
+            flex-direction: column;
+        }
+    }
+
     .border-radius {
         border-radius: 20px;
+        
+        @media (max-width: 574px) {
+            width: 150px !important;
+        }
+
+        @media (max-width: 500px) {
+            width: 100px !important;
+        }
+
+        @media (max-width: 426px) {
+            width: 100% !important;
+        }
+    }
+
+    .container-footer {
+        @media (max-width: 435px) {
+            flex-direction: column;
+            align-items: center !important;
+        }
     }
 
     .container-table {
@@ -41,6 +66,20 @@ export const Container = styled.section`
         
         span {
             font-size: 12px;
+        }
+    }
+
+    .container-buttons {
+        button {
+            @media (max-width: 660px) {
+                font-size: 10px;
+                padding: 3px;
+            }
+
+        }
+
+        @media (max-width: 426px) {
+            margin-top: 10px;
         }
     }
 `;
